@@ -1,0 +1,24 @@
+:root {
+  --color-page:    #0c1c30;
+  --color-accent:  #5fd9e0;
+  --color-bg:      #163459;
+  --color-hover:   #1d4477;
+  --color-active:  #0e2c52;
+  --color-on-bg:   #ffffff;
+  --radius-pill:   24;
+}
+
+#app { bg: var(--color-page); }
+
+.display { text-align: center; font-size: 96; text-color: var(--color-on-bg); }
+
+.primary {
+  bg:        var(--color-bg);
+  hover-bg:  var(--color-hover);
+  press-bg:  var(--color-active);
+  text-color: var(--color-on-bg);
+  radius:    var(--radius-pill);
+  text-align: center;
+  font-size: 18;
+}
+.primary:focus { outline: 2 var(--color-accent); }

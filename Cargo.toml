@@ -1,0 +1,17 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# `lumenc new` names the package after the app's directory, which also names
+# the executable; the library keeps this name, so main.rs and the tests can
+# call it `app` whatever the package is called.
+[lib]
+name = "app"
+
+[dependencies]
+# `lumenc new` sets this to the Lumen release it belongs to; the crate links
+# that release's prebuilt engine, and rust-toolchain.toml names the compiler
+# the engine was built with. Move the two together.
+lumenui = "0.0.10"

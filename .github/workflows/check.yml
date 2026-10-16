@@ -1,0 +1,33 @@
+name: check
+
+# The template must scaffold into a working app: install the released
+# toolchain, scaffold this tree the way `lumenc new` does (which pins the app
+# to the installed release's lumenui and rustc), check the markup, and build,
+# test and run the program against that release's prebuilt engine.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: templates/rust
+      - uses: lumen-fx/lumen/tools/setup-lumen@main
+      - name: Install the system libraries the engine links
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libgtk-3-dev libxkbcommon-dev libwayland-dev libx11-dev
+      - name: Scaffold this tree
+        env:
+          LUMEN_TEMPLATES_DIR: ${{ github.workspace }}/templates
+        run: lumenc new "$RUNNER_TEMP/app" rust
+      - run: lumenc check "$RUNNER_TEMP/app"
+      - run: cargo test
+        working-directory: ${{ runner.temp }}/app
+      - run: lumenc run "$RUNNER_TEMP/app" --headless --ticks 5
