@@ -4,15 +4,16 @@ The click counter, written in Rust with the Lumen SDK (`lumenui`).
 
 What it shows:
 
-- The app as a Rust program. `src/lib.rs` builds a `lumenui::App` from the
-  markup and stylesheet in `src/` and two click handlers; `src/main.rs`
-  runs it.
-- Signals from Rust. `insert_signal("clicks", 0)` seeds a named entry in the
-  reactive store, and `on_click("bump", ...)` writes it. The label's
+- The app as a Rust program. `lumen.toml` names the UI in `src/`, and
+  `build.rs` compiles it into the executable when the crate builds; a markup
+  or style error fails `cargo build`. `src/lib.rs` starts the app from it
+  with `lumenui::app!()` and adds two click handlers; `src/main.rs` runs it.
+- Handlers on element ids, the way a script writes them. `signal("clicks",
+  0)` seeds a named entry in the reactive store, and `on_click("bump", ...)`
+  writes it through the `Ui` the handler gets. The label's
   `bind-text="clicks"` re-renders whenever it changes.
-- Hot reload in a debug build. `lumen_source!` reads `src/main.lmn` and
-  `src/main.css` from disk and watches them under `cargo run`, and compiles
-  them into the executable under `cargo build --release`.
+- Hot reload in a debug build. Under `cargo run` the app watches `src/` and
+  reloads the UI on an edit while the window stays open.
 - A test that renders. `tests/screenshot.rs` paints the app with no window
   and checks the frame; the same `screenshot` call is how you compare a
   view with a golden image.

@@ -15,3 +15,8 @@ name = "app"
 # that release's prebuilt engine, and rust-toolchain.toml names the compiler
 # the engine was built with. Move the two together.
 lumenui = "0.0.10"
+
+[build-dependencies]
+# Compiles the UI in build.rs; `lumenc new` sets it to the same release as
+# `lumenui`.
+lumenui-build = "0.0.10"
