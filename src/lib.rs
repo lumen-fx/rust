@@ -3,17 +3,11 @@
 
 use lumenui::prelude::*;
 
-/// The whole app: the markup and stylesheet in `src/`, and two click
-/// handlers that write the `clicks` signal the label is bound to.
+/// The whole app: the UI lumen.toml names, compiled by build.rs, and two
+/// click handlers that write the `clicks` signal the label is bound to.
 pub fn app() -> App {
-    App::new()
-        // From disk with hot reload in a debug build, compiled into the
-        // executable in a release build.
-        .add_plugins(LumenDefaultPlugins.with_source(lumen_source!("src/main.lmn", "src/main.css")))
-        .insert_signal("clicks", 0i64)
-        .on_click("bump", |ctx| {
-            let n = ctx.get_or::<i64>("clicks", 0) + 1;
-            ctx.set("clicks", n);
-        })
-        .on_click("reset", |ctx| ctx.set("clicks", 0i64))
+    lumenui::app!()
+        .signal("clicks", 0i64)
+        .on_click("bump", |ui, _| ui.update("clicks", |n: i64| n + 1))
+        .on_click("reset", |ui, _| ui.set("clicks", 0i64))
 }
