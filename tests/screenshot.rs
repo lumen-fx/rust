@@ -7,8 +7,8 @@ use lumenui::HeadlessOptions;
 fn the_app_paints_its_page() {
     let frame = app::app()
         .screenshot(HeadlessOptions {
-            dpr: 1.0,
             ticks: Some(3),
+            ..HeadlessOptions::default()
         })
         .expect("the app renders");
 
